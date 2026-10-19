@@ -1,0 +1,22 @@
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 本地环境变量（防止密钥泄露）
+.env
+.env.*
+!.env.example
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# 操作系统文件
+.DS_Store
+Thumbs.db

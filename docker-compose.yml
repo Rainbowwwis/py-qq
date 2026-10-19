@@ -1,0 +1,56 @@
+services:
+  db_dev:
+    image: mysql:8.0
+    container_name: qiaoqiao-mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: qiaoqiao_dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  db_test:
+    image: mysql:8.0
+    container_name: qiaoqiao-mysql-test
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: qiaoqiao_test
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data_test:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  web_dev:
+    build: .
+    container_name: qiaoqiao-flask-dev
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: mysql+pymysql://root:root123@db_dev:3306/qiaoqiao_dev
+    depends_on:
+      - db_dev
+    volumes:
+      - .:/app
+    command: python run.py
+
+  web_test:
+    build: .
+    container_name: qiaoqiao-flask-test
+    ports:
+      - "5001:5000"
+    environment:
+      FLASK_ENV: testing
+      DATABASE_URL: mysql+pymysql://root:root123@db_test:3306/qiaoqiao_test
+    depends_on:
+      - db_test
+    volumes:
+      - .:/app
+    command: python run.py
+
+volumes:
+  mysql_data_dev:
+  mysql_data_test:
