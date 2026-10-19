@@ -1,5 +1,21 @@
 # 敲敲救 后端 - 快速启动
 
+先克隆仓库。拿到代码后的本地操作步骤
+
+虽然代码在 Docker 里跑，但为了他们在 VS Code 里写代码时**不报错、有提示**，拉取代码后必须执行以下三步（这在我的 `README.md` 里也有写，但你可以口头再强调一下）：
+
+1.  **打开终端，进入项目目录**
+2.  **创建并激活本地虚拟环境**：
+    ```bash
+    python -m venv .venv
+    .venv\Scripts\activate  # Windows系统
+    ```
+3.  **安装 Python 依赖**：
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  **让 VS Code 选中这个虚拟环境**：按 `Ctrl+Shift+P`，输入 `Python: Select Interpreter`，选择带 `.venv` 的那个路径。
+
 欢迎加入后端开发！请按照以下三步操作，即可在本地跑通开发环境。
 
 ## 第一步：配置 Docker 镜像加速
