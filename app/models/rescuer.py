@@ -43,8 +43,8 @@ class RescuerProfile(db.Model):
     rating = db.Column(db.Float, nullable=False, default=5.0)
     finished_orders = db.Column(db.Integer, nullable=False, default=0)
 
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     def to_dict(self) -> dict:
         return {

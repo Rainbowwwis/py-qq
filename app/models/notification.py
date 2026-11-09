@@ -24,7 +24,7 @@ class NotificationLog(db.Model):
     channel = db.Column(db.String(20), nullable=False, default=NotifyChannel.WECHAT)
     content = db.Column(db.Text, default='')
     success = db.Column(db.Boolean, nullable=False, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     def to_dict(self) -> dict:
         return {

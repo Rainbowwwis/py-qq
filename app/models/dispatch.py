@@ -24,7 +24,7 @@ class DispatchRecord(db.Model):
     distance_km = db.Column(db.Float, nullable=False, default=0.0)
     status = db.Column(db.String(20), nullable=False, default=DispatchStatus.OFFERED, index=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     responded_at = db.Column(db.DateTime)
 
     def to_dict(self) -> dict:

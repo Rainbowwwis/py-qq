@@ -50,7 +50,7 @@ class HelpOrder(db.Model):
     ai_summary = db.Column(db.Text, default='')         # 大模型摘要，供救护员接单前查看
     need_120 = db.Column(db.Boolean, nullable=False, default=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), index=True)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), index=True)
     accepted_at = db.Column(db.DateTime)
     arrived_at = db.Column(db.DateTime)
     finished_at = db.Column(db.DateTime)

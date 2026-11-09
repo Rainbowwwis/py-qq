@@ -36,7 +36,7 @@ class User(db.Model):
     # 家属/机构与老人的绑定关系
     bound_elder_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     rescuer_profile = db.relationship(
         'RescuerProfile', backref='user', uselist=False, cascade='all, delete-orphan'
