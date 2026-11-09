@@ -1,6 +1,6 @@
 """就近派单：候选救护员查询、呼叫、接单、到达、完成。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import Blueprint, g, request
 
@@ -83,11 +83,11 @@ def accept(dispatch_id: int):
         return fail('该派单已不可接单')
 
     record.status = DispatchStatus.ACCEPTED
-    record.responded_at = datetime.utcnow()
+    record.responded_at = datetime.now(timezone.utc)
 
     order = record.order
     order.status = OrderStatus.ACCEPTED
-    order.accepted_at = datetime.utcnow()
+    order.accepted_at = datetime.now(timezone.utc)
 
     # 接单后向家属推送
     db.session.add(
@@ -114,7 +114,7 @@ def arrive(dispatch_id: int):
         return fail('当前状态不可标记到达')
 
     record.order.status = OrderStatus.ARRIVED
-    record.order.arrived_at = datetime.utcnow()
+    record.order.arrived_at = datetime.now(timezone.utc)
     db.session.commit()
     return ok(record.order.to_dict(), msg='已标记到达')
 
@@ -129,7 +129,7 @@ def finish(dispatch_id: int):
     record.status = DispatchStatus.FINISHED
     order = record.order
     order.status = OrderStatus.FINISHED
-    order.finished_at = datetime.utcnow()
+    order.finished_at = datetime.now(timezone.utc)
 
     profile = RescuerProfile.query.filter_by(user_id=g.current_user.id).first()
     if profile:

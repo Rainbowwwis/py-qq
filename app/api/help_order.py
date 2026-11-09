@@ -1,6 +1,6 @@
 """求助工单：敲击/语音触发 → AI 分级 → 进入调度。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import Blueprint, g, request
 
@@ -97,6 +97,6 @@ def cancel_order(order_id: int):
     if order.status in (OrderStatus.FINISHED, OrderStatus.CANCELLED):
         return fail('当前状态不可取消')
     order.status = OrderStatus.CANCELLED
-    order.finished_at = datetime.utcnow()
+    order.finished_at = datetime.now(timezone.utc)
     db.session.commit()
     return ok(order.to_dict(), msg='已取消')

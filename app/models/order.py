@@ -1,6 +1,6 @@
 """求助工单：由敲击/语音/手动触发，经 AI 分级后进入调度流程。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ..extensions import db
 
@@ -50,7 +50,7 @@ class HelpOrder(db.Model):
     ai_summary = db.Column(db.Text, default='')         # 大模型摘要，供救护员接单前查看
     need_120 = db.Column(db.Boolean, nullable=False, default=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), index=True)
     accepted_at = db.Column(db.DateTime)
     arrived_at = db.Column(db.DateTime)
     finished_at = db.Column(db.DateTime)

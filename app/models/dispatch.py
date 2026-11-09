@@ -1,6 +1,6 @@
 """派单记录：一条工单可向多名救护员发起呼叫，逐一记录响应结果。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ..extensions import db
 
@@ -24,7 +24,7 @@ class DispatchRecord(db.Model):
     distance_km = db.Column(db.Float, nullable=False, default=0.0)
     status = db.Column(db.String(20), nullable=False, default=DispatchStatus.OFFERED, index=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     responded_at = db.Column(db.DateTime)
 
     def to_dict(self) -> dict:

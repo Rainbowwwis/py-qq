@@ -4,7 +4,7 @@
 elder（老人）/ family（家属）/ rescuer（持证救护员）/ org（机构、社区、志愿服务组织）。
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -36,7 +36,7 @@ class User(db.Model):
     # 家属/机构与老人的绑定关系
     bound_elder_id = db.Column(db.Integer, db.ForeignKey('user.id'), index=True)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     rescuer_profile = db.relationship(
         'RescuerProfile', backref='user', uselist=False, cascade='all, delete-orphan'

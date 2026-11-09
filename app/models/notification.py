@@ -1,6 +1,6 @@
 """三方通知记录：家属、社区/机构、120 的触达与结果留痕。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ..extensions import db
 
@@ -24,7 +24,7 @@ class NotificationLog(db.Model):
     channel = db.Column(db.String(20), nullable=False, default=NotifyChannel.WECHAT)
     content = db.Column(db.Text, default='')
     success = db.Column(db.Boolean, nullable=False, default=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     def to_dict(self) -> dict:
         return {

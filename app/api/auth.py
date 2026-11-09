@@ -93,8 +93,8 @@ def update_rescuer_location():
     if 'service_radius_km' in body:
         profile.service_radius_km = float(body['service_radius_km'])
 
-    from datetime import datetime
+    from datetime import datetime, timezone
 
-    profile.location_updated_at = datetime.utcnow()
+    profile.location_updated_at = datetime.now(timezone.utc)
     db.session.commit()
     return ok(profile.to_dict())

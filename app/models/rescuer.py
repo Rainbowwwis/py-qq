@@ -1,6 +1,6 @@
 """持证救护员档案：资质审核、接单半径、在线状态与评分。"""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ..extensions import db
 
@@ -43,8 +43,8 @@ class RescuerProfile(db.Model):
     rating = db.Column(db.Float, nullable=False, default=5.0)
     finished_orders = db.Column(db.Integer, nullable=False, default=0)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
 
     def to_dict(self) -> dict:
         return {
